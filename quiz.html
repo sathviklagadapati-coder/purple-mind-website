@@ -90,8 +90,28 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--violet); ou
 @media (max-width: 560px) { form { grid-template-columns: 1fr; } }
 @media (max-width: 860px) {
   .quiz { grid-template-columns: 1fr; min-height: 0; }
-  .side { grid-template-rows: auto; gap: 20px; }
+  .side { grid-template-rows: auto; gap: 16px; padding: 20px clamp(16px, 4vw, 40px); }
+  .side h2 { font-size: 1.15rem; margin-top: 6px; }
+  .side p { display: none; }
+  .side .mono { font-size: 0.68rem; }
   .prog-list, .side-foot { display: none; }
+  .prog { gap: 0; }
+}
+@media (max-width: 520px) {
+  .stage { padding: 28px 16px 48px; }
+  .panel { gap: 22px; }
+  .panel h1 { font-size: 1.55rem; }
+  .opt { padding: 14px 14px; }
+  .actions { gap: 10px; }
+  .actions .hint { display: none; }
+  .actions .btn { flex: 1; justify-content: center; }
+  .score { padding: 20px; }
+  .ring { width: 112px; height: 112px; }
+  .ring .num { font-size: 1.9rem; }
+  .ring .of { font-size: 0.58rem; letter-spacing: 0.06em; }
+  form { padding: 18px; }
+  .fix { grid-template-columns: 1fr; }
+  .fix p { grid-column: 1; }
 }
 </style>
 </head>
@@ -100,7 +120,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--violet); ou
 <header class="nav">
   <div class="wrap">
     <a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">pm.</span>Purple Mind</a>
-    <a class="btn btn-ghost" href="index.html">← Back to site</a>
+    <a class="btn btn-ghost" href="index.html">← <span class="long">Back to site</span><span class="short">Back</span></a>
   </div>
 </header>
 
@@ -310,7 +330,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--violet); ou
     stage.appendChild(panel);
     if (panel._keys) { keyHandler = function (e) { if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return; panel._keys(e); }; addEventListener('keydown', keyHandler); }
     updateProgress();
-    if (step > 0) window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (step > 0) { var top = window.innerWidth <= 860 ? stage.getBoundingClientRect().top + scrollY - 70 : 0; window.scrollTo({ top: top, behavior: 'smooth' }); }
   }
   render();
 })();
