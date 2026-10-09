@@ -1,19 +1,19 @@
 /* Purple Mind — shared tokens and primitives
    Layout: hard left edge, grotesk headlines, plum (#221236) and lavender (#D8C3FB) pulled from the pm. mark */
 :root {
-  --bg: #FBF9FD;
-  --surface: #FFFFFF;
-  --ink: #1B1226;
-  --muted: #6E6380;
-  --line: #E4DCEF;
-  --plum: #221236;
-  --plum-ink: #EFE7FB;
-  --plum-muted: #A996C4;
-  --lavender: #D8C3FB;
-  --violet: #7C4DDE;
+  --bg: #F3F1F5;
+  --surface: #FBFAFC;
+  --ink: #15111C;
+  --muted: #625D6E;
+  --line: #D9D5E0;
+  --plum: #15111F;
+  --plum-ink: #ECE8F3;
+  --plum-muted: #9A92AD;
+  --lavender: #C9B8EE;
+  --violet: #5D47B5;
   --violet-ink: #FFFFFF;
-  --tint: #F0E9FA;
-  --ok: #2F8F5B;
+  --tint: #E9E5F0;
+  --ok: #2E7D56;
   --display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
@@ -22,16 +22,16 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #130E1A; --surface: #1C1526; --ink: #F0EAF8; --muted: #A89BBA; --line: #2E2440;
-    --plum: #1B1129; --plum-ink: #F0EAF8; --plum-muted: #A996C4;
-    --violet: #A98BEF; --violet-ink: #1B1129; --tint: #251B35; --ok: #5FBF8A;
+    --bg: #0E0B13; --surface: #16121D; --ink: #ECE8F3; --muted: #9D96AC; --line: #26202F;
+    --plum: #120E1A; --plum-ink: #ECE8F3; --plum-muted: #9A92AD;
+    --violet: #9C86E3; --violet-ink: #120E1A; --tint: #1E1827; --ok: #5BB383;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #130E1A; --surface: #1C1526; --ink: #F0EAF8; --muted: #A89BBA; --line: #2E2440;
-  --plum: #1B1129; --plum-ink: #F0EAF8; --plum-muted: #A996C4;
-  --violet: #A98BEF; --violet-ink: #1B1129; --tint: #251B35; --ok: #5FBF8A;
+  --bg: #0E0B13; --surface: #16121D; --ink: #ECE8F3; --muted: #9D96AC; --line: #26202F;
+  --plum: #120E1A; --plum-ink: #ECE8F3; --plum-muted: #9A92AD;
+  --violet: #9C86E3; --violet-ink: #120E1A; --tint: #1E1827; --ok: #5BB383;
   color-scheme: dark;
 }
 
@@ -64,7 +64,7 @@ a { color: inherit; }
 .btn-primary:hover { transform: translateY(-2px); }
 .btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
 .btn-ghost:hover { border-color: var(--ink); }
-.btn-light { background: var(--lavender); color: #221236; }
+.btn-light { background: var(--lavender); color: #15111F; }
 .btn-light:hover { transform: translateY(-2px); }
 
 /* Nav */
