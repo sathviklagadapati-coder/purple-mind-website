@@ -17,12 +17,12 @@
 .side h2 { color: #fff; font-size: 1.6rem; margin-top: 10px; }
 .side p { color: var(--plum-muted); font-size: 0.95rem; margin-top: 10px; }
 .prog { display: grid; gap: 10px; }
-.prog-bar { height: 4px; background: color-mix(in srgb, var(--lavender) 18%, transparent); overflow: hidden; }
+.prog-bar { height: 4px; background: color-mix(in srgb, #fff 12%, transparent); overflow: hidden; }
 .prog-bar i { display: block; height: 100%; width: 0; background: var(--lavender); transition: width .5s var(--ease); }
 .prog-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 0.88rem; color: var(--plum-muted); }
 .prog-list li { display: flex; gap: 10px; align-items: baseline; transition: color .3s; }
 .prog-list li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; opacity: .5; }
-.prog-list li.done { color: var(--lavender); }
+.prog-list li.done { color: var(--plum-ink); }
 .prog-list li.now { color: #fff; }
 .prog-list li.now::before { opacity: 1; background: var(--lavender); }
 .side-foot { font-size: 0.82rem; color: var(--plum-muted); }
@@ -31,7 +31,7 @@
 .panel { display: grid; gap: 28px; max-width: 720px; animation: slide .45s var(--ease) both; }
 .panel[hidden] { display: none; }
 @keyframes slide { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
-.panel .mono { color: var(--violet); }
+.panel .mono { color: var(--muted); }
 .panel h1 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); font-weight: 600; margin-top: 8px; }
 .panel .help { color: var(--muted); margin-top: 10px; max-width: 56ch; }
 
@@ -60,18 +60,18 @@
 .ring { width: 132px; height: 132px; position: relative; display: grid; place-items: center; }
 .ring svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 .ring circle { fill: none; stroke-width: 9; }
-.ring .bg { stroke: color-mix(in srgb, var(--lavender) 18%, transparent); }
+.ring .bg { stroke: color-mix(in srgb, #fff 12%, transparent); }
 .ring .fg { stroke: var(--lavender); stroke-linecap: round; stroke-dasharray: 339.3; stroke-dashoffset: 339.3; transition: stroke-dashoffset 1.4s var(--ease) .2s; }
 .ring .num { font-family: var(--display); font-weight: 700; font-size: 2.2rem; letter-spacing: -0.04em; color: #fff; font-variant-numeric: tabular-nums; }
 .ring .of { font-family: var(--mono); font-size: 0.68rem; color: var(--plum-muted); letter-spacing: 0.1em; }
-.score .tier { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lavender); }
+.score .tier { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--plum-muted); }
 .score h2 { color: #fff; font-size: 1.6rem; margin-top: 6px; }
 .score p { color: var(--plum-muted); margin-top: 8px; font-size: 0.97rem; }
 @media (max-width: 520px) { .score { grid-template-columns: 1fr; justify-items: start; } }
 
 .fixes { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .fix { background: var(--surface); padding: 20px 22px; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 4px 16px; }
-.fix .n { font-family: var(--mono); color: var(--violet); font-size: 0.85rem; padding-top: 3px; }
+.fix .n { font-family: var(--mono); color: var(--muted); font-size: 0.85rem; padding-top: 3px; }
 .fix h3 { font-size: 1.05rem; }
 .fix p { color: var(--muted); font-size: 0.94rem; grid-column: 2; }
 

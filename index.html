@@ -14,8 +14,8 @@
 .hero { background: var(--plum); color: var(--plum-ink); overflow: hidden; position: relative; }
 .hero::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: linear-gradient(color-mix(in srgb, var(--lavender) 5%, transparent) 1px, transparent 1px),
-                    linear-gradient(90deg, color-mix(in srgb, var(--lavender) 5%, transparent) 1px, transparent 1px);
+  background-image: linear-gradient(color-mix(in srgb, #fff 5%, transparent) 1px, transparent 1px),
+                    linear-gradient(90deg, color-mix(in srgb, #fff 5%, transparent) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 70%);
 }
@@ -26,8 +26,8 @@
 .hero h1 span { color: var(--lavender); }
 .hero .lede { font-size: 1.2rem; color: var(--plum-muted); max-width: 36ch; line-height: 1.5; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero .btn-ghost { border-color: color-mix(in srgb, var(--lavender) 35%, transparent); color: var(--plum-ink); }
-.hero .btn-ghost:hover { border-color: var(--lavender); }
+.hero .btn-ghost { border-color: color-mix(in srgb, #fff 28%, transparent); color: var(--plum-ink); }
+.hero .btn-ghost:hover { border-color: #fff; }
 .hero-foot { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 0.88rem; color: var(--plum-muted); }
 .hero-foot b { color: var(--plum-ink); font-weight: 600; }
 
@@ -48,12 +48,12 @@
 .caret { display: inline-block; width: 2px; height: 1.1em; background: var(--violet); vertical-align: text-bottom; margin-left: 2px; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .result {
-  background: color-mix(in srgb, #fff 6%, var(--plum)); border: 1px solid color-mix(in srgb, var(--lavender) 22%, transparent);
+  background: color-mix(in srgb, #fff 6%, var(--plum)); border: 1px solid color-mix(in srgb, #fff 14%, transparent);
   border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px;
   opacity: 0; transform: translateY(8px); transition: opacity .5s var(--ease), transform .5s var(--ease);
 }
 .result.show { opacity: 1; transform: none; }
-.result .tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lavender); }
+.result .tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--plum-muted); }
 .result .name { font-weight: 600; color: #fff; font-size: 1.05rem; }
 .result .meta { color: var(--plum-muted); font-size: 0.9rem; }
 .result .cta { margin-top: 6px; display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--lavender); }
@@ -79,7 +79,7 @@
 .track { display: flex; gap: 48px; width: max-content; animation: scroll 36s linear infinite; }
 .marquee:hover .track { animation-play-state: paused; }
 .track span { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; display: flex; align-items: center; gap: 48px; }
-.track span::after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--violet); }
+.track span::after { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--muted); }
 @keyframes scroll { to { transform: translateX(-50%); } }
 
 section.block { padding-block: clamp(72px, 9vw, 120px); }
@@ -90,10 +90,10 @@ section.block { padding-block: clamp(72px, 9vw, 120px); }
 /* Services */
 .services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .service { background: var(--surface); padding: 28px 24px 32px; display: grid; gap: 14px; align-content: start; position: relative; transition: background .3s; }
-.service::after { content: "→"; position: absolute; right: 22px; top: 24px; color: var(--violet); transition: transform .3s var(--ease); }
+.service::after { content: "→"; position: absolute; right: 22px; top: 24px; color: var(--muted); transition: transform .3s var(--ease); }
 .service:hover { background: var(--tint); }
-.service:hover::after { transform: translateX(5px); }
-.service .mono { color: var(--violet); }
+.service:hover::after { transform: translateX(5px); color: var(--violet); }
+.service .mono { color: var(--muted); }
 .service p { color: var(--muted); font-size: 0.97rem; }
 .service ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 0.88rem; }
 .service li { padding-left: 14px; position: relative; }
@@ -108,7 +108,7 @@ section.block { padding-block: clamp(72px, 9vw, 120px); }
 .line.in i { transform: none; }
 .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
 .step { display: grid; gap: 8px; align-content: start; }
-.step .mono { color: var(--violet); }
+.step .mono { color: var(--muted); }
 .step p { color: var(--muted); font-size: 0.95rem; }
 @media (max-width: 860px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
@@ -119,7 +119,7 @@ section.block { padding-block: clamp(72px, 9vw, 120px); }
 .rules { border-top: 1px solid color-mix(in srgb, var(--plum-ink) 16%, transparent); }
 .rule { display: grid; grid-template-columns: 52px minmax(0, 1fr) minmax(0, 1.5fr); gap: 20px 32px; padding-block: 26px; border-bottom: 1px solid color-mix(in srgb, var(--plum-ink) 16%, transparent); transition: padding-left .3s var(--ease); }
 .rule:hover { padding-left: 8px; }
-.rule .n { font-family: var(--mono); color: var(--lavender); font-size: 0.9rem; padding-top: 4px; }
+.rule .n { font-family: var(--mono); color: var(--plum-muted); font-size: 0.9rem; padding-top: 4px; }
 .rule h3 { color: #fff; }
 .rule p { color: var(--plum-muted); }
 .rule .src { display: block; margin-top: 8px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; color: color-mix(in srgb, var(--plum-muted) 75%, transparent); }
@@ -144,7 +144,7 @@ td:last-child { color: var(--muted); }
 details { border-bottom: 1px solid var(--line); }
 summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding-block: 20px; font-weight: 600; font-size: 1.05rem; }
 summary::-webkit-details-marker { display: none; }
-summary::after { content: "+"; color: var(--violet); font-size: 1.4rem; line-height: 1; transition: transform .25s var(--ease); }
+summary::after { content: "+"; color: var(--muted); font-size: 1.4rem; line-height: 1; transition: transform .25s var(--ease); }
 details[open] summary::after { transform: rotate(45deg); }
 details p { color: var(--muted); padding-bottom: 22px; max-width: 64ch; }
 
@@ -153,7 +153,7 @@ details p { color: var(--muted); padding-bottom: 22px; max-width: 64ch; }
 .cta .wrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: center; padding-block: clamp(56px, 7vw, 88px); }
 .cta p { color: var(--muted); font-size: 1.08rem; max-width: 50ch; margin-top: 14px; }
 .cta-box { background: var(--surface); border: 1px solid var(--line); padding: 28px; display: grid; gap: 16px; }
-.cta-box .mono { color: var(--violet); }
+.cta-box .mono { color: var(--muted); }
 .cta-box ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 0.95rem; color: var(--muted); }
 .cta-box li::before { content: "✓ "; color: var(--ok); }
 @media (max-width: 760px) { .cta .wrap { grid-template-columns: 1fr; } }
@@ -195,7 +195,7 @@ details p { color: var(--muted); padding-bottom: 22px; max-width: 64ch; }
 
       <div class="demo" aria-label="Example of a client search">
         <div class="search">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5D47B5" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141418" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <span class="q"><span id="typed"></span><span class="caret" aria-hidden="true"></span></span>
         </div>
         <div class="result" id="result">
@@ -380,7 +380,7 @@ details p { color: var(--muted); padding-bottom: 22px; max-width: 64ch; }
   // Reveal on scroll
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { rootMargin: '0px 0px -4% 0px', threshold: 0 });
+  }, { rootMargin: '0px 0px 12% 0px', threshold: 0 });
   // Safety net: nothing stays hidden if the observer never fires (e.g. anchor jumps)
   setTimeout(function () { document.querySelectorAll('.reveal, .line').forEach(function (el) { el.classList.add('in'); }); }, 2500);
   document.querySelectorAll('.reveal, .line').forEach(function (el) { io.observe(el); });

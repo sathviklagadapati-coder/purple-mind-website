@@ -1,18 +1,18 @@
 /* Purple Mind — shared tokens and primitives
    Layout: hard left edge, grotesk headlines, plum (#221236) and lavender (#D8C3FB) pulled from the pm. mark */
 :root {
-  --bg: #F3F1F5;
-  --surface: #FBFAFC;
-  --ink: #15111C;
-  --muted: #625D6E;
-  --line: #D9D5E0;
-  --plum: #15111F;
-  --plum-ink: #ECE8F3;
-  --plum-muted: #9A92AD;
-  --lavender: #C9B8EE;
-  --violet: #5D47B5;
+  --bg: #F4F4F6;
+  --surface: #FFFFFF;
+  --ink: #141418;
+  --muted: #66666F;
+  --line: #DEDEE3;
+  --plum: #121215;
+  --plum-ink: #EDEDF0;
+  --plum-muted: #8E8E99;
+  --lavender: #B9A8E6;
+  --violet: #5A48B0;
   --violet-ink: #FFFFFF;
-  --tint: #E9E5F0;
+  --tint: #ECECEF;
   --ok: #2E7D56;
   --display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
@@ -22,16 +22,16 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0E0B13; --surface: #16121D; --ink: #ECE8F3; --muted: #9D96AC; --line: #26202F;
-    --plum: #120E1A; --plum-ink: #ECE8F3; --plum-muted: #9A92AD;
-    --violet: #9C86E3; --violet-ink: #120E1A; --tint: #1E1827; --ok: #5BB383;
+    --bg: #0D0D10; --surface: #15151A; --ink: #EDEDF0; --muted: #9A9AA5; --line: #26262C;
+    --plum: #0F0F12; --plum-ink: #EDEDF0; --plum-muted: #8E8E99;
+    --violet: #9A88E0; --violet-ink: #0F0F12; --tint: #1C1C22; --ok: #5BB383;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0E0B13; --surface: #16121D; --ink: #ECE8F3; --muted: #9D96AC; --line: #26202F;
-  --plum: #120E1A; --plum-ink: #ECE8F3; --plum-muted: #9A92AD;
-  --violet: #9C86E3; --violet-ink: #120E1A; --tint: #1E1827; --ok: #5BB383;
+  --bg: #0D0D10; --surface: #15151A; --ink: #EDEDF0; --muted: #9A9AA5; --line: #26262C;
+  --plum: #0F0F12; --plum-ink: #EDEDF0; --plum-muted: #8E8E99;
+  --violet: #9A88E0; --violet-ink: #0F0F12; --tint: #1C1C22; --ok: #5BB383;
   color-scheme: dark;
 }
 
@@ -64,7 +64,7 @@ a { color: inherit; }
 .btn-primary:hover { transform: translateY(-2px); }
 .btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
 .btn-ghost:hover { border-color: var(--ink); }
-.btn-light { background: var(--lavender); color: #15111F; }
+.btn-light { background: #FFFFFF; color: #141418; }
 .btn-light:hover { transform: translateY(-2px); }
 
 /* Nav */
@@ -100,7 +100,7 @@ a { color: inherit; }
 }
 
 /* Scroll reveal: only applied once JS has confirmed it will run, so the page is complete without it */
-.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
 .js .reveal.in { opacity: 1; transform: none; }
 .js .reveal[data-delay="1"] { transition-delay: .1s; }
 .js .reveal[data-delay="2"] { transition-delay: .2s; }
