@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Purple Mind is a marketing agency for online therapy practices: privacy-safe ads, search, and websites built for intake.">
+<title>Purple Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,100;1,9..144,300..600,100&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: calm left-aligned editorial column, one breathing orb in the hero, a deep plum band for the ethics promise */
+:root {
+  --bg: #F6F2FA;
+  --surface: #FFFFFF;
+  --ink: #231A2E;
+  --muted: #675B75;
+  --line: #E2D9EC;
+  --accent: #6B3FB8;
+  --accent-ink: #FFFFFF;
+  --soft: #E9DFF7;
+  --band: #221236;
+  --band-ink: #F1EAFA;
+  --band-muted: #BFAED6;
+  --orb-a: #C9B2EE;
+  --orb-b: #8E63D6;
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2rem, 4vw, 2.75rem);
+  --step-4: clamp(2.6rem, 6.5vw, 4.6rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14101A; --surface: #1D1726; --ink: #EEE8F6; --muted: #A99CBA; --line: #2F263B;
+    --accent: #B99BF2; --accent-ink: #1A1024; --soft: #2A203A;
+    --band: #1E1132; --band-ink: #F1EAFA; --band-muted: #B6A6CF;
+    --orb-a: #4A3474; --orb-b: #9C78E2; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14101A; --surface: #1D1726; --ink: #EEE8F6; --muted: #A99CBA; --line: #2F263B;
+  --accent: #B99BF2; --accent-ink: #1A1024; --soft: #2A203A;
+  --band: #1E1132; --band-ink: #F1EAFA; --band-muted: #B6A6CF;
+  --orb-a: #4A3474; --orb-b: #9C78E2; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.08; text-wrap: balance; margin: 0; font-variation-settings: "SOFT" 100; }
+h1 { font-size: var(--step-4); letter-spacing: -0.02em; }
+h2 { font-size: var(--step-3); letter-spacing: -0.015em; }
+h3 { font-size: var(--step-1); font-weight: 500; }
+em { font-style: italic; color: var(--accent); }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.lede { font-size: var(--step-1); color: var(--muted); max-width: 34ch; line-height: 1.5; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font: 600 0.95rem/1 var(--body); text-decoration: none;
+  padding: 0.95em 1.4em; border-radius: 999px; border: 1px solid transparent; cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn-ghost:hover { background: var(--soft); }
+
+/* Nav */
+header.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font-family: var(--display); font-size: 1.5rem; text-decoration: none; display: flex; align-items: center; gap: 10px; font-variation-settings: "SOFT" 100; }
+.logo-mark { width: 34px; height: 34px; border-radius: 8px; background: #221236; color: #D8C3FB; display: grid; place-items: center; font: 700 0.92rem/1 var(--body); letter-spacing: -0.02em; box-shadow: inset 0 0 0 1px color-mix(in srgb, #D8C3FB 14%, transparent); }
+.nav-links { display: flex; gap: 28px; font-size: 0.95rem; color: var(--muted); }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--ink); }
+@media (max-width: 820px) { .nav-links { display: none; } }
+
+/* Hero */
+.hero { padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px); }
+.hero .wrap { display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; align-items: center; }
+.hero-copy { display: grid; gap: 28px; min-width: 0; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-note { font-size: 0.9rem; color: var(--muted); }
+.breath { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; display: grid; place-items: center; }
+.ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--line); }
+.ring.r2 { inset: 12%; }
+.orb {
+  width: 58%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--orb-a), var(--orb-b) 75%);
+  box-shadow: 0 30px 80px -20px color-mix(in srgb, var(--orb-b) 55%, transparent);
+  animation: breathe 10s ease-in-out infinite;
+}
+.breath-label { position: absolute; bottom: 4%; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+@keyframes breathe { 0%, 100% { transform: scale(0.82); } 50% { transform: scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { .orb { animation: none; } }
+@media (max-width: 820px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .breath { max-width: 260px; order: -1; }
+}
+
+/* Audience strip */
+.audience { border-block: 1px solid var(--line); padding-block: 22px; }
+.audience .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; color: var(--muted); font-size: 0.95rem; }
+.audience strong { color: var(--ink); font-weight: 600; }
+
+section.block { padding-block: clamp(64px, 9vw, 112px); }
+.section-head { display: grid; gap: 14px; max-width: 640px; margin-bottom: 48px; }
+.section-head p { color: var(--muted); }
+
+/* Services */
+.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.service { padding: 32px 32px 36px 0; border-bottom: 1px solid var(--line); display: grid; gap: 12px; align-content: start; }
+.service:nth-child(even) { padding-left: 32px; padding-right: 0; border-left: 1px solid var(--line); }
+.service p { color: var(--muted); max-width: 46ch; }
+.service ul { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.service li { font-size: 0.82rem; padding: 4px 10px; border-radius: 999px; background: var(--soft); color: var(--ink); }
+@media (max-width: 720px) {
+  .services { grid-template-columns: 1fr; }
+  .service, .service:nth-child(even) { padding: 28px 0; border-left: 0; }
+}
+
+/* Process */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; counter-reset: step; }
+.step { display: grid; gap: 10px; align-content: start; padding-top: 20px; border-top: 2px solid var(--accent); }
+.step-num { font-family: var(--display); font-size: var(--step-2); color: var(--accent); font-variation-settings: "SOFT" 100; }
+.step .when { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.step p { color: var(--muted); font-size: 0.97rem; }
+@media (max-width: 880px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+/* Ethics band */
+.band { background: var(--band); color: var(--band-ink); }
+.band .eyebrow { color: var(--band-muted); }
+.band .section-head p { color: var(--band-muted); }
+.band em { color: #D9C6FA; }
+.rules { display: grid; gap: 0; border-top: 1px solid color-mix(in srgb, var(--band-ink) 18%, transparent); }
+.rule { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; padding-block: 26px; border-bottom: 1px solid color-mix(in srgb, var(--band-ink) 18%, transparent); }
+.rule h3 { color: var(--band-ink); }
+.rule p { color: var(--band-muted); }
+.rule .src { display: block; margin-top: 8px; font-size: 0.82rem; color: color-mix(in srgb, var(--band-muted) 80%, transparent); }
+@media (max-width: 720px) { .rule { grid-template-columns: 1fr; gap: 8px; } }
+
+/* Reporting */
+.report { display: grid; grid-template-columns: 1fr 1.3fr; gap: 56px; align-items: start; }
+.report .section-head { margin-bottom: 0; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+td:last-child { color: var(--muted); }
+@media (max-width: 880px) { .report { grid-template-columns: 1fr; gap: 32px; } }
+
+/* FAQ */
+.faq { max-width: 760px; border-top: 1px solid var(--line); }
+details { border-bottom: 1px solid var(--line); padding-block: 20px; }
+summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; font-family: var(--display); font-size: var(--step-1); font-variation-settings: "SOFT" 100; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--accent); font-family: var(--body); font-size: 1.4rem; line-height: 1; transition: transform .2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { color: var(--muted); margin-top: 12px; max-width: 62ch; }
+
+/* Contact */
+.contact { background: var(--soft); }
+.contact .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: start; }
+.contact .section-head { margin-bottom: 0; }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; background: var(--surface); padding: clamp(20px, 3vw, 32px); border-radius: 20px; border: 1px solid var(--line); }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label { font-size: 0.85rem; font-weight: 600; }
+input, select, textarea {
+  font: inherit; font-size: 0.97rem; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; width: 100%;
+}
+textarea { min-height: 110px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; justify-content: space-between; }
+.form-foot small { color: var(--muted); max-width: 38ch; }
+.thanks { grid-column: 1 / -1; padding: 14px 16px; border-radius: 10px; background: var(--soft); font-size: 0.95rem; }
+@media (max-width: 880px) { .contact .wrap { grid-template-columns: 1fr; gap: 32px; } }
+@media (max-width: 520px) { form { grid-template-columns: 1fr; } }
+
+/* Footer */
+footer { padding-block: 40px; border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 0.9rem; }
+.crisis { color: var(--ink); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true">pm.</span>Purple Mind</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#process">How we work</a>
+      <a href="#ethics">Ethics &amp; privacy</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Book a strategy call</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">Marketing for online therapy practices</span>
+        <h1>Help the right clients <em>find you</em> when they're ready to reach out.</h1>
+        <p class="lede">Purple Mind runs search, ads, and websites for telehealth therapists and group practices. Everything we build protects client privacy and fits your professional ethics code.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">Book a strategy call</a>
+          <a class="btn btn-ghost" href="#services">See what we do</a>
+        </div>
+        <p class="hero-note">Free 30-minute call. We'll review your current site and directory profiles together.</p>
+      </div>
+      <div class="breath" aria-hidden="true">
+        <span class="ring"></span><span class="ring r2"></span>
+        <span class="orb"></span>
+        <span class="breath-label" id="breath-label">Breathe in</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="audience">
+    <div class="wrap">
+      <strong>Built for</strong>
+      <span>Solo private practices</span>
+      <span>Group practices</span>
+      <span>Telehealth platforms</span>
+      <span>Couples &amp; family therapy</span>
+      <span>Psychiatric NP practices</span>
+    </div>
+  </div>
+
+  <section class="block" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Services</span>
+        <h2>Four things we do, and do <em>carefully</em>.</h2>
+        <p>Most people searching for a therapist are having a hard week. Our job is to make your practice easy to find, easy to trust, and easy to book.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <h3>Search &amp; directory visibility</h3>
+          <p>We tune your Google Business Profile and the directory listings clients actually browse, so you show up for the specialties and states you serve.</p>
+          <ul><li>Psychology Today</li><li>Google Business Profile</li><li>Local &amp; state SEO</li></ul>
+        </article>
+        <article class="service">
+          <h3>Privacy-safe paid ads</h3>
+          <p>Google and Meta campaigns that follow healthcare ad policies, target only the states where you hold a license, and keep tracking off pages where clients share health details.</p>
+          <ul><li>Google Ads</li><li>Meta Ads</li><li>Licensure-state targeting</li></ul>
+        </article>
+        <article class="service">
+          <h3>Websites built for intake</h3>
+          <p>Calm, accessible sites that answer the questions people have before they book: fees, insurance, specialties, which states you see clients in, and what the first session is like.</p>
+          <ul><li>WCAG 2.2 AA</li><li>Mobile-first</li><li>Secure intake handoff</li></ul>
+        </article>
+        <article class="service">
+          <h3>Content clinicians sign off on</h3>
+          <p>Blog posts, emails, and social content written in plain language and reviewed by you before anything goes live. No diagnosis-by-quiz, no fear-based hooks.</p>
+          <ul><li>Blog &amp; SEO articles</li><li>Email newsletters</li><li>Clinician review step</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="process" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How we work</span>
+        <h2>From first call to your first <em>booked intake</em>.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <span class="when">Week 1</span>
+          <h3>Listen</h3>
+          <p>We learn your specialties, caseload goals, states, and payer mix, then audit your site, profiles, and any ads already running.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span class="when">Weeks 2–4</span>
+          <h3>Build</h3>
+          <p>We fix the site, rewrite profiles, and set up campaigns. You review every word that speaks for your practice.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <span class="when">Week 5</span>
+          <h3>Launch</h3>
+          <p>Campaigns go live with conservative budgets. We watch closely and adjust in the first two weeks.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <span class="when">Monthly</span>
+          <h3>Report</h3>
+          <p>A short monthly report and a 30-minute call. We show what booked clients and what didn't, in plain numbers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block band" id="ethics">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Ethics &amp; privacy</span>
+        <h2>Marketing that holds up in front of your <em>licensing board</em>.</h2>
+        <p>Therapy marketing has rules most agencies don't know about. These are the ones we follow on every account.</p>
+      </div>
+      <div class="rules">
+        <div class="rule">
+          <h3>No client testimonials</h3>
+          <p>We never ask current or former clients for reviews or quotes. We build trust with your credentials, your approach, and clear information instead.
+            <span class="src">APA Ethics Code 5.05 · ACA Code C.3.b · NASW 4.07</span></p>
+        </div>
+        <div class="rule">
+          <h3>No tracking on sensitive pages</h3>
+          <p>Ad pixels and session recorders stay off intake forms, booking pages, and condition-specific pages, so health information isn't shared with ad platforms.
+            <span class="src">HHS OCR guidance on online tracking technologies</span></p>
+        </div>
+        <div class="rule">
+          <h3>Business Associate Agreements</h3>
+          <p>Any tool that could touch client information is covered by a signed BAA, or we don't use it.
+            <span class="src">HIPAA Privacy &amp; Security Rules</span></p>
+        </div>
+        <div class="rule">
+          <h3>Only the states you're licensed in</h3>
+          <p>Telehealth ads and landing pages are limited to the states where you can legally practice, and your site lists them plainly.</p>
+        </div>
+        <div class="rule">
+          <h3>Crisis resources on every site</h3>
+          <p>Every site we build shows the 988 Suicide &amp; Crisis Lifeline and makes clear that online therapy isn't an emergency service.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="reporting">
+    <div class="wrap report">
+      <div class="section-head">
+        <span class="eyebrow">What we report</span>
+        <h2>We count booked clients, <em>not clicks</em>.</h2>
+        <p>Traffic and impressions are easy to inflate. Your monthly report leads with the numbers that affect your caseload.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Metric</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td>Consult requests</td><td>People who reached out through your site, phone, or directory profile.</td></tr>
+            <tr><td>Booked intakes</td><td>Consults that turned into a scheduled first session.</td></tr>
+            <tr><td>Cost per booked intake</td><td>Total spend divided by new clients. The number that tells you if ads are worth it.</td></tr>
+            <tr><td>First-session show rate</td><td>Whether the clients we bring in are a good fit and actually attend.</td></tr>
+            <tr><td>Profile views by state</td><td>Where demand is growing, so you can plan new licenses.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions practices ask us</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Do you work with insurance-based practices?</summary>
+          <p>Yes. We work with private-pay, in-network, and mixed practices. We'll shape your messaging and ad targeting around the panels you're on and the fees you charge.</p>
+        </details>
+        <details>
+          <summary>Will you ever see my clients' information?</summary>
+          <p>No. We set things up so client details go straight into your EHR or practice management system. We see counts, such as how many consults were booked, never names or notes.</p>
+        </details>
+        <details>
+          <summary>How soon will I get new consult requests?</summary>
+          <p>Paid ads usually bring the first requests within a few weeks of launch. Search and directory work builds more slowly, often over three to six months. We'll give you a realistic forecast after the audit.</p>
+        </details>
+        <details>
+          <summary>I'm licensed in more than one state. Can you handle that?</summary>
+          <p>Yes. We build state-specific pages and campaigns, and keep each one inside the rules for that state, including PSYPACT and counseling compact states where they apply.</p>
+        </details>
+        <details>
+          <summary>Do I have to write the content myself?</summary>
+          <p>No. We write it, and you approve it. Nothing clinical goes live without a licensed clinician on your team signing off.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Get started</span>
+        <h2>Book a free <em>strategy call</em>.</h2>
+        <p>Tell us a little about your practice. We'll reply within one business day to set up a 30-minute call. Please don't include any client information.</p>
+      </div>
+      <form id="contact-form" novalidate>
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input id="f-name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-practice">Practice name</label>
+          <input id="f-practice" name="practice" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="f-type">Practice type</label>
+          <select id="f-type" name="type">
+            <option>Solo private practice</option>
+            <option>Group practice (2–10 clinicians)</option>
+            <option>Group practice (10+ clinicians)</option>
+            <option>Telehealth platform</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="f-states">States you're licensed in</label>
+          <input id="f-states" name="states" placeholder="e.g. California, Oregon, Washington">
+        </div>
+        <div class="field full">
+          <label for="f-goal">What would you like help with?</label>
+          <textarea id="f-goal" name="goal" placeholder="e.g. We have openings for couples therapy and want more consults from Google."></textarea>
+        </div>
+        <div class="form-foot">
+          <small>We'll only use your details to reply to this request.</small>
+          <button class="btn btn-primary" type="submit">Request a call</button>
+        </div>
+        <p class="thanks" id="thanks" role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Purple Mind · Marketing for online therapy practices</span>
+    <span class="crisis">In crisis? Call or text <strong>988</strong> (US) for the Suicide &amp; Crisis Lifeline.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var label = document.getElementById('breath-label');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (label && !reduce) {
+    var inhale = true;
+    setInterval(function () { inhale = !inhale; label.textContent = inhale ? 'Breathe in' : 'Breathe out'; }, 5000);
+  } else if (label) { label.textContent = 'Take a breath'; }
+
+  var form = document.getElementById('contact-form');
+  var thanks = document.getElementById('thanks');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = form.elements.name.value.trim();
+    var email = form.elements.email.value.trim();
+    if (!name || !/^\S+@\S+\.\S+$/.test(email)) {
+      thanks.textContent = 'Please add your name and a valid email address so we can reply.';
+      thanks.hidden = false;
+      return;
+    }
+    thanks.textContent = 'Thanks, ' + name.split(' ')[0] + '. Your request is ready. (Preview site: this form isn’t connected to an inbox yet.)';
+    thanks.hidden = false;
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>
