@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Practice Growth Assessment · Purple Mind</title>
+<meta name="description" content="An eight-question assessment for online therapy practices: get a readiness score and the three fixes we'd make first.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* Quiz: one question per screen, plum sidebar with progress, answers as large selectable tiles */
+.quiz { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: calc(100vh - 70px); }
+.side { background: var(--plum); color: var(--plum-ink); padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 40px); display: grid; align-content: space-between; gap: 32px; }
+.side .mono { color: var(--plum-muted); }
+.side h2 { color: #fff; font-size: 1.6rem; margin-top: 10px; }
+.side p { color: var(--plum-muted); font-size: 0.95rem; margin-top: 10px; }
+.prog { display: grid; gap: 10px; }
+.prog-bar { height: 4px; background: color-mix(in srgb, var(--lavender) 18%, transparent); overflow: hidden; }
+.prog-bar i { display: block; height: 100%; width: 0; background: var(--lavender); transition: width .5s var(--ease); }
+.prog-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 0.88rem; color: var(--plum-muted); }
+.prog-list li { display: flex; gap: 10px; align-items: baseline; transition: color .3s; }
+.prog-list li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; opacity: .5; }
+.prog-list li.done { color: var(--lavender); }
+.prog-list li.now { color: #fff; }
+.prog-list li.now::before { opacity: 1; background: var(--lavender); }
+.side-foot { font-size: 0.82rem; color: var(--plum-muted); }
+
+.stage { padding: clamp(32px, 5vw, 72px) clamp(16px, 5vw, 80px); display: grid; align-content: start; min-width: 0; }
+.panel { display: grid; gap: 28px; max-width: 720px; animation: slide .45s var(--ease) both; }
+.panel[hidden] { display: none; }
+@keyframes slide { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+.panel .mono { color: var(--violet); }
+.panel h1 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); font-weight: 600; margin-top: 8px; }
+.panel .help { color: var(--muted); margin-top: 10px; max-width: 56ch; }
+
+.opts { display: grid; gap: 10px; }
+.opts.grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  display: flex; gap: 14px; align-items: flex-start; text-align: left; width: 100%;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px 18px; font: inherit; color: var(--ink); cursor: pointer;
+  transition: border-color .2s, background .2s, transform .2s var(--ease);
+}
+.opt:hover { border-color: var(--violet); transform: translateY(-1px); }
+.opt[aria-checked="true"] { border-color: var(--violet); background: var(--tint); box-shadow: inset 0 0 0 1px var(--violet); }
+.opt .k { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; flex: none; margin-top: 2px; }
+.opt[aria-checked="true"] .k { color: var(--violet); border-color: var(--violet); }
+.opt b { display: block; font-weight: 600; }
+.opt small { color: var(--muted); font-size: 0.88rem; }
+@media (max-width: 640px) { .opts.grid { grid-template-columns: 1fr; } }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.actions .hint { font-size: 0.85rem; color: var(--muted); margin-left: auto; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+
+/* Results */
+.score { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: center; background: var(--plum); color: var(--plum-ink); padding: 28px; border-radius: var(--radius); }
+.ring { width: 132px; height: 132px; position: relative; display: grid; place-items: center; }
+.ring svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 9; }
+.ring .bg { stroke: color-mix(in srgb, var(--lavender) 18%, transparent); }
+.ring .fg { stroke: var(--lavender); stroke-linecap: round; stroke-dasharray: 339.3; stroke-dashoffset: 339.3; transition: stroke-dashoffset 1.4s var(--ease) .2s; }
+.ring .num { font-family: var(--display); font-weight: 700; font-size: 2.2rem; letter-spacing: -0.04em; color: #fff; font-variant-numeric: tabular-nums; }
+.ring .of { font-family: var(--mono); font-size: 0.68rem; color: var(--plum-muted); letter-spacing: 0.1em; }
+.score .tier { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lavender); }
+.score h2 { color: #fff; font-size: 1.6rem; margin-top: 6px; }
+.score p { color: var(--plum-muted); margin-top: 8px; font-size: 0.97rem; }
+@media (max-width: 520px) { .score { grid-template-columns: 1fr; justify-items: start; } }
+
+.fixes { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.fix { background: var(--surface); padding: 20px 22px; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 4px 16px; }
+.fix .n { font-family: var(--mono); color: var(--violet); font-size: 0.85rem; padding-top: 3px; }
+.fix h3 { font-size: 1.05rem; }
+.fix p { color: var(--muted); font-size: 0.94rem; grid-column: 2; }
+
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; background: var(--surface); border: 1px solid var(--line); padding: 24px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label { font-size: 0.85rem; font-weight: 600; }
+input, select, textarea { font: inherit; font-size: 0.97rem; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 11px 13px; width: 100%; }
+textarea { min-height: 90px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--violet); outline-offset: 1px; border-color: transparent; }
+.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.form-foot small { color: var(--muted); max-width: 40ch; }
+.status { grid-column: 1 / -1; padding: 14px 16px; border-radius: var(--radius); background: var(--tint); font-size: 0.95rem; }
+.status.err { background: color-mix(in srgb, #D14343 12%, var(--surface)); }
+.summary { font-family: var(--mono); font-size: 0.8rem; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); padding: 14px; margin-top: 10px; max-height: 220px; overflow: auto; }
+@media (max-width: 560px) { form { grid-template-columns: 1fr; } }
+@media (max-width: 860px) {
+  .quiz { grid-template-columns: 1fr; min-height: 0; }
+  .side { grid-template-rows: auto; gap: 20px; }
+  .prog-list, .side-foot { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">pm.</span>Purple Mind</a>
+    <a class="btn btn-ghost" href="index.html">← Back to site</a>
+  </div>
+</header>
+
+<main class="quiz">
+  <aside class="side">
+    <div>
+      <span class="mono">Practice Growth Assessment</span>
+      <h2>Eight questions. Two minutes.</h2>
+      <p>You'll get a readiness score and the three things we'd fix first. No client information is requested at any point.</p>
+    </div>
+    <div class="prog">
+      <div class="prog-bar"><i id="bar"></i></div>
+      <ol class="prog-list" id="prog-list"></ol>
+    </div>
+    <p class="side-foot">Your answers stay in this browser until you choose to send them on the last step.</p>
+  </aside>
+
+  <section class="stage" id="stage" aria-live="polite"></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Purple Mind</span>
+    <span class="crisis">In crisis? Call or text <strong>988</strong> (US) for the Suicide &amp; Crisis Lifeline.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Where completed assessments are sent. Leave empty until a form endpoint (for example a Formspree form URL) is set up.
+  var FORM_ENDPOINT = '';
+
+  var QUESTIONS = [
+    { id: 'type', label: 'Practice type', title: 'What kind of practice are you?', help: 'This sets the baseline for everything that follows.',
+      opts: [
+        { v: 'solo', t: 'Solo private practice', s: 'One licensed clinician', pts: 1 },
+        { v: 'small', t: 'Group practice, 2–10 clinicians', s: 'Shared brand, one intake path', pts: 2 },
+        { v: 'large', t: 'Group practice, 10+ clinicians', s: 'Multiple specialties or locations', pts: 3 },
+        { v: 'platform', t: 'Telehealth platform', s: 'Clinicians on a shared platform', pts: 3 }
+      ] },
+    { id: 'states', label: 'Licensure', title: 'How many states can your clinicians see clients in?', help: 'Telehealth ads must be limited to licensed states. More states means more addressable demand.',
+      opts: [
+        { v: '1', t: 'One state', pts: 1 }, { v: '2-3', t: 'Two or three', pts: 2 },
+        { v: '4-10', t: 'Four to ten', pts: 3 }, { v: '10+', t: 'More than ten (or PSYPACT)', pts: 3 }
+      ] },
+    { id: 'openings', label: 'Capacity', title: 'How much open capacity do you have right now?', help: 'Marketing works best when there are sessions to fill. Full caseloads need a different plan.',
+      opts: [
+        { v: 'full', t: 'Full, with a waitlist', s: 'Growth means hiring first', pts: 0 },
+        { v: 'few', t: 'A few openings a week', pts: 2 },
+        { v: 'many', t: 'Significant openings', s: 'Multiple clinicians with room', pts: 3 },
+        { v: 'new', t: 'Brand new practice', s: 'Building a caseload from zero', pts: 3 }
+      ] },
+    { id: 'consults', label: 'Current demand', title: 'How many new consult requests do you get in a typical month?', help: 'Count every channel: website, phone, directories, referrals.',
+      opts: [
+        { v: '0-5', t: 'Fewer than 5', pts: 3 }, { v: '5-15', t: '5 to 15', pts: 2 },
+        { v: '15-40', t: '15 to 40', pts: 1 }, { v: '40+', t: 'More than 40', pts: 0 }
+      ] },
+    { id: 'channel', label: 'Main channel', title: 'Where do most new clients come from today?', help: 'Pick the single biggest source.',
+      opts: [
+        { v: 'referrals', t: 'Word of mouth and referrals', s: 'Reliable, but hard to scale', pts: 3 },
+        { v: 'directory', t: 'Psychology Today or other directories', pts: 2 },
+        { v: 'search', t: 'Google search or Google Business Profile', pts: 1 },
+        { v: 'ads', t: 'Paid ads', pts: 1 },
+        { v: 'insurance', t: 'Insurance panel listings', pts: 2 },
+        { v: 'unsure', t: "I'm not sure", s: 'Nothing is tracked', pts: 3 }
+      ] },
+    { id: 'website', label: 'Website', title: 'Which best describes your website?', help: 'Think about what someone sees on their phone before deciding to reach out.',
+      opts: [
+        { v: 'none', t: 'No website, or a directory profile only', pts: 3 },
+        { v: 'basic', t: 'A basic site with contact details', s: 'Not updated in a while', pts: 2 },
+        { v: 'good', t: 'Modern site with online booking', pts: 1 },
+        { v: 'strong', t: 'Modern site, booking and state-specific pages', pts: 0 }
+      ] },
+    { id: 'privacy', label: 'Privacy setup', title: 'Do you know which tracking tools run on your site and booking pages?', help: 'Ad pixels on intake pages can share health information with ad platforms. Most practices have never checked.',
+      opts: [
+        { v: 'audited', t: 'Yes, audited and documented', pts: 0 },
+        { v: 'think', t: 'I think so, but not documented', pts: 2 },
+        { v: 'no', t: 'No idea', pts: 3 },
+        { v: 'nothing', t: 'We have no tracking at all', pts: 1 }
+      ] },
+    { id: 'budget', label: 'Budget', title: 'What monthly marketing budget are you considering, including ad spend?', help: 'A range is fine. This helps us recommend the right starting point.',
+      opts: [
+        { v: 'lt1k', t: 'Under $1,000', pts: 1 }, { v: '1-3k', t: '$1,000 to $3,000', pts: 2 },
+        { v: '3-10k', t: '$3,000 to $10,000', pts: 3 }, { v: '10k+', t: 'More than $10,000', pts: 3 }
+      ] }
+  ];
+
+  var answers = {}, step = 0, stage = document.getElementById('stage'), bar = document.getElementById('bar'), list = document.getElementById('prog-list');
+  var maxPts = QUESTIONS.reduce(function (s, q) { return s + Math.max.apply(null, q.opts.map(function (o) { return o.pts; })); }, 0);
+
+  QUESTIONS.concat([{ label: 'Your results' }]).forEach(function (q) { var li = document.createElement('li'); li.textContent = q.label; list.appendChild(li); });
+
+  function updateProgress() {
+    bar.style.width = (step / QUESTIONS.length * 100) + '%';
+    Array.prototype.forEach.call(list.children, function (li, i) { li.className = i < step ? 'done' : i === step ? 'now' : ''; });
+  }
+
+  function renderQuestion() {
+    var q = QUESTIONS[step], keys = 'ABCDEFGH';
+    var panel = document.createElement('div'); panel.className = 'panel';
+    panel.innerHTML = '<div><span class="mono">Question ' + (step + 1) + ' of ' + QUESTIONS.length + ' · ' + q.label + '</span><h1>' + q.title + '</h1><p class="help">' + q.help + '</p></div>' +
+      '<div class="opts' + (q.opts.length > 4 ? ' grid' : '') + '" role="radiogroup" aria-label="' + q.title + '"></div>' +
+      '<div class="actions"><button class="btn btn-ghost" type="button" id="back"' + (step === 0 ? ' disabled' : '') + '>← Back</button>' +
+      '<button class="btn btn-primary" type="button" id="next" disabled>Continue <span class="arr">→</span></button><span class="hint">Press A–' + keys[q.opts.length - 1] + ' to answer, Enter to continue</span></div>';
+    var opts = panel.querySelector('.opts'), next = panel.querySelector('#next');
+    q.opts.forEach(function (o, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', answers[q.id] === o.v ? 'true' : 'false');
+      b.innerHTML = '<span class="k">' + keys[i] + '</span><span><b>' + o.t + '</b>' + (o.s ? '<small>' + o.s + '</small>' : '') + '</span>';
+      b.addEventListener('click', function () { select(o.v); });
+      opts.appendChild(b);
+    });
+    function select(v) {
+      answers[q.id] = v; next.disabled = false;
+      opts.querySelectorAll('.opt').forEach(function (b, i) { b.setAttribute('aria-checked', q.opts[i].v === v ? 'true' : 'false'); });
+    }
+    if (answers[q.id]) next.disabled = false;
+    next.addEventListener('click', function () { step++; render(); });
+    panel.querySelector('#back').addEventListener('click', function () { step--; render(); });
+    panel._keys = function (e) {
+      var i = keys.indexOf(e.key.toUpperCase());
+      if (i > -1 && i < q.opts.length && !e.metaKey && !e.ctrlKey) select(q.opts[i].v);
+      else if (e.key === 'Enter' && !next.disabled) next.click();
+    };
+    return panel;
+  }
+
+  function score() {
+    var pts = 0, labels = {};
+    QUESTIONS.forEach(function (q) { var o = q.opts.filter(function (o) { return o.v === answers[q.id]; })[0]; pts += o.pts; labels[q.label] = o.t; });
+    return { pts: pts, pct: Math.round(pts / maxPts * 100), labels: labels };
+  }
+
+  // Fixes are chosen from answers, most urgent first
+  function fixes() {
+    var f = [], a = answers;
+    if (a.privacy === 'no' || a.privacy === 'think') f.push(['Run a tracking audit on intake and booking pages', 'Document every pixel and script, remove any on sensitive pages, and confirm a BAA for each remaining vendor. This comes before any ad spend.']);
+    if (a.website === 'none' || a.website === 'basic') f.push(['Build a site that answers the pre-booking questions', 'Fees, insurance, specialties, licensed states and what the first session looks like, with a booking path that hands off securely to your EHR.']);
+    if (a.channel === 'unsure') f.push(['Set up source tracking for consult requests', 'Tag every website, phone and directory inquiry by source so you know what is working before spending more on any of it.']);
+    if (a.channel === 'referrals' || a.channel === 'insurance') f.push(['Add a second channel you control', 'Referrals and panel listings are hard to scale on purpose. Google Business Profile and directory optimization is the lowest-cost next step.']);
+    if (a.states === '4-10' || a.states === '10+') f.push(['Publish state-specific landing pages', 'One page per licensed state, each listing the clinicians who can see clients there. These capture search demand that a single homepage cannot.']);
+    if (a.openings === 'full') f.push(['Hold paid acquisition until capacity opens', 'Spending on consults you cannot schedule hurts show rates and reviews. Use this period to fix the site and profiles instead.']);
+    if (a.consults === '0-5' || a.consults === '5-15') f.push(['Start conservative, state-targeted search ads', 'Search ads limited to your licensed states reach people actively looking for a therapist this week. Budgets start small and scale on cost per booked intake.']);
+    if (a.budget === 'lt1k') f.push(['Prioritize organic channels first', 'Below $1,000 a month, directory and Google Business Profile work outperforms paid ads. Ads become worthwhile once the booking path is solid.']);
+    f.push(['Rebuild directory profiles around specialties', 'Most Psychology Today profiles read like résumés. Rewriting them around the problems you treat and the states you serve lifts inquiry rates without any ad spend.']);
+    f.push(['Lead monthly reporting with booked intakes', 'Track consult requests, booked intakes, cost per intake and show rate. Clicks and impressions go on page two.']);
+    return f.slice(0, 3);
+  }
+
+  function renderResults() {
+    var s = score(), tier = s.pct >= 60 ? ['High opportunity', 'There is clear room to grow and the fundamentals need work first. The fixes below are where we would start on day one.']
+      : s.pct >= 35 ? ['Ready to scale', 'The basics are in place. The next gains come from tightening the booking path and adding a channel you control.']
+      : ['Well positioned', 'Your setup is ahead of most practices. Growth here is about precision: state pages, reporting and careful paid testing.'];
+    var panel = document.createElement('div'); panel.className = 'panel'; panel.style.maxWidth = '820px';
+    var fx = fixes();
+    panel.innerHTML =
+      '<div><span class="mono">Your results</span><h1>Here is where your practice stands.</h1></div>' +
+      '<div class="score"><div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="54"/><circle class="fg" id="arc" cx="60" cy="60" r="54"/></svg><div style="text-align:center"><div class="num" id="num">0</div><div class="of">Opportunity</div></div></div>' +
+      '<div><span class="tier">' + tier[0] + '</span><h2>Growth opportunity score: ' + s.pct + ' of 100</h2><p>' + tier[1] + ' A higher score means more untapped upside, not a worse practice.</p></div></div>' +
+      '<div><span class="mono">What we would fix first</span><div class="fixes" style="margin-top:12px">' + fx.map(function (f, i) { return '<div class="fix"><span class="n">0' + (i + 1) + '</span><h3>' + f[0] + '</h3><p>' + f[1] + '</p></div>'; }).join('') + '</div></div>' +
+      '<div><span class="mono">Book a free 30-minute strategy call</span><p class="help" style="margin-bottom:16px">We will walk through these three fixes against your actual site and profiles. Please do not include any client information.</p>' +
+      '<form id="f" novalidate>' +
+      '<div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>' +
+      '<div class="field"><label for="f-practice">Practice name</label><input id="f-practice" name="practice" autocomplete="organization"></div>' +
+      '<div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>' +
+      '<div class="field"><label for="f-role">Your role</label><select id="f-role" name="role"><option>Owner / lead clinician</option><option>Practice manager</option><option>Marketing lead</option><option>Other</option></select></div>' +
+      '<div class="field full"><label for="f-notes">Anything else we should know? (optional)</label><textarea id="f-notes" name="notes"></textarea></div>' +
+      '<div class="form-foot"><small>Your eight answers are sent with this request so the call is useful from minute one.</small><button class="btn btn-primary" type="submit" id="send">Request my call <span class="arr">→</span></button></div>' +
+      '<p class="status" id="status" role="status" hidden></p></form></div>' +
+      '<div class="actions"><button class="btn btn-ghost" type="button" id="back">← Change my answers</button></div>';
+    panel.querySelector('#back').addEventListener('click', function () { step = QUESTIONS.length - 1; render(); });
+    setTimeout(function () {
+      panel.querySelector('#arc').style.strokeDashoffset = 339.3 * (1 - s.pct / 100);
+      var num = panel.querySelector('#num'), t0 = performance.now();
+      (function tick(t) { var k = Math.min(1, (t - t0) / 1400); num.textContent = Math.round(s.pct * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); })(t0);
+    }, 50);
+    panel.querySelector('#f').addEventListener('submit', function (e) { e.preventDefault(); submit(e.target, s); });
+    return panel;
+  }
+
+  function submit(form, s) {
+    var status = form.querySelector('#status'), btn = form.querySelector('#send');
+    var name = form.name.value.trim(), email = form.email.value.trim();
+    status.hidden = false; status.className = 'status';
+    if (!name || !/^\S+@\S+\.\S+$/.test(email)) { status.classList.add('err'); status.textContent = 'Please add your name and a valid email so we can reply.'; return; }
+    var payload = { name: name, practice: form.practice.value.trim(), email: email, role: form.role.value, notes: form.notes.value.trim(), score: s.pct + '/100' };
+    Object.keys(s.labels).forEach(function (k) { payload[k] = s.labels[k]; });
+    payload['Top fixes'] = fixes().map(function (f) { return f[0]; }).join(' | ');
+    var text = Object.keys(payload).map(function (k) { return k + ': ' + payload[k]; }).join('\n');
+
+    if (!FORM_ENDPOINT) {
+      status.innerHTML = 'Thanks, ' + name.split(' ')[0] + '. This form is not connected to an inbox yet, so your request was not sent. Here is a copy of your assessment to keep:<div class="summary"></div>';
+      status.querySelector('.summary').textContent = text;
+      return;
+    }
+    btn.disabled = true; status.textContent = 'Sending…';
+    fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); status.textContent = 'Thanks, ' + name.split(' ')[0] + '. Your request is in. We reply within one business day to set up the call.'; form.reset(); })
+      .catch(function () { btn.disabled = false; status.classList.add('err'); status.textContent = 'Something went wrong sending your request. Please try again in a moment.'; });
+  }
+
+  var keyHandler = null;
+  function render() {
+    if (keyHandler) removeEventListener('keydown', keyHandler);
+    stage.innerHTML = '';
+    var panel = step < QUESTIONS.length ? renderQuestion() : renderResults();
+    stage.appendChild(panel);
+    if (panel._keys) { keyHandler = function (e) { if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return; panel._keys(e); }; addEventListener('keydown', keyHandler); }
+    updateProgress();
+    if (step > 0) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  render();
+})();
+</script>
+</body>
+</html>
