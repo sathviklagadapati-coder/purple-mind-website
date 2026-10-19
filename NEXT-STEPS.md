@@ -15,10 +15,7 @@ Booking method (not decided yet):
 - **Option B: request form** through Formspree. Simpler, but you reply by email to schedule.
 
 ## Quiz responses (secondary)
-- Use Formspree (free for 50 submissions/month): formspree.io → New form → copy the `https://formspree.io/f/...` endpoint.
-- Paste it into `FORM_ENDPOINT` near the top of the script in `quiz.html`.
-- In the Formspree settings, set "Restrict to domain" to `sathviklagadapati-coder.github.io`.
-- Until then, quiz submissions are not sent anywhere. The page tells visitors this.
+- Done (2026-10-19): quiz results go to Netlify Forms as `assessment`.
 
 ## Design rules to keep
 - Purple is used only as a small accent: primary buttons, one headline phrase, progress lines, the selected quiz answer and the score ring. Everything else is neutral charcoal or grey.

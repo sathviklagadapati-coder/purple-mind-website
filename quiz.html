@@ -148,10 +148,14 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--violet); ou
   </div>
 </footer>
 
+<!-- Netlify Forms reads this hidden copy at deploy time; the visible form is built by the script below -->
+<form name="assessment" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="bot-field"><input name="name"><input name="practice"><input name="email"><input name="role">
+  <textarea name="notes"></textarea><input name="score"><input name="top-fixes"><textarea name="answers"></textarea>
+</form>
 <script>
 (function () {
   // Where completed assessments are sent. Leave empty until a form endpoint (for example a Formspree form URL) is set up.
-  var FORM_ENDPOINT = '';
 
   var QUESTIONS = [
     { id: 'type', label: 'Practice type', title: 'What kind of practice are you?', help: 'This sets the baseline for everything that follows.',
@@ -311,15 +315,19 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--violet); ou
     payload['Top fixes'] = fixes().map(function (f) { return f[0]; }).join(' | ');
     var text = Object.keys(payload).map(function (k) { return k + ': ' + payload[k]; }).join('\n');
 
-    if (!FORM_ENDPOINT) {
-      status.innerHTML = 'Thanks, ' + name.split(' ')[0] + '. This form is not connected to an inbox yet, so your request was not sent. Here is a copy of your assessment to keep:<div class="summary"></div>';
-      status.querySelector('.summary').textContent = text;
-      return;
-    }
     btn.disabled = true; status.textContent = 'Sending…';
-    fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+    var body = new URLSearchParams({
+      'form-name': 'assessment',
+      name: payload.name, practice: payload.practice, email: payload.email, role: payload.role,
+      notes: payload.notes, score: payload.score, 'top-fixes': payload['Top fixes'], answers: text
+    });
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() })
       .then(function (r) { if (!r.ok) throw new Error(r.status); status.textContent = 'Thanks, ' + name.split(' ')[0] + '. Your request is in. We reply within one business day to set up the call.'; form.reset(); })
-      .catch(function () { btn.disabled = false; status.classList.add('err'); status.textContent = 'Something went wrong sending your request. Please try again in a moment.'; });
+      .catch(function () {
+        btn.disabled = false; status.classList.add('err');
+        status.innerHTML = 'Something went wrong sending your request. Please try again in a moment. Here is a copy of your assessment to keep:<div class="summary"></div>';
+        status.querySelector('.summary').textContent = text;
+      });
   }
 
   var keyHandler = null;
